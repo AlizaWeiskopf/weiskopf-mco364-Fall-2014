@@ -6,26 +6,26 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-public class ReceivingThread extends Thread{
-	
+public class ServerThread extends Thread {
+
 	private Socket socket;
-	private ChatWindow window;
-	
-	public ReceivingThread(Socket socket, ChatWindow window){
+	private ChatBox window;
+
+	public ServerThread(Socket socket, ChatBox window) {
 		this.socket = socket;
 		this.window = window;
 	}
-	
+
 	@Override
-	public void run(){
+	public void run() {
 		try {
 			InputStream input = socket.getInputStream();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(input));
 			String line;
-			while((line = reader.readLine()) != null){
-				window.setChatHistoryText(line);
+			while ((line = reader.readLine()) != null) {
+				window.addClientText(line);
 			}
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -4,31 +4,20 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class ChatServer extends Thread{
-	
-	private ChatWindow window;
-	
-	public ChatServer(ChatWindow window) throws IOException{
-		this.window = window;
-		
-	}
-	
-	@Override
-	public void run(){
-		ServerSocket server;
-		try {
-			server = new ServerSocket(8080);
-			
-			while(true){
-				Socket socket = server.accept();
-				ReceivingThread thread = new ReceivingThread(socket, window);
-				thread.start();
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	
-	}
+public class ChatServer {
 
+	public static void main(String[] args) throws IOException {
+
+		ServerSocket serverSocket = new ServerSocket(8080);
+		ChatBox chatBox = new ChatBox();
+
+		while (true) {
+			Socket socket = serverSocket.accept();
+
+			ServerThread thread = new ServerThread(socket, chatBox);
+			thread.start();
+
+		}
+
+	}
 }

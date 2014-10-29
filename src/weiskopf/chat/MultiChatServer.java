@@ -12,8 +12,8 @@ public class MultiChatServer {
 
 	public static void main(String[] args) throws IOException {
 
-		ChatWindow window = new ChatWindow();
-		window.setVisible(true);
+		// ChatBox window = new ChatBox();
+		// window.setVisible(true);
 		ServerSocket serverSocket = new ServerSocket(9097);
 		List<Socket> sockets = new ArrayList<Socket>();
 		BlockingQueue<String> messages = new LinkedBlockingQueue<String>();

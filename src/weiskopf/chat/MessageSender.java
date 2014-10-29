@@ -34,7 +34,7 @@ public class MessageSender extends Thread {
 						writer.flush();
 					} catch (IOException e) {
 						e.printStackTrace();
-						iter.remove();
+						sockets.remove(socket);
 					}
 				}
 			} catch (InterruptedException e1) {

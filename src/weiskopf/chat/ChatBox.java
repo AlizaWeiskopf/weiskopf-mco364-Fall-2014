@@ -5,17 +5,23 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.net.Socket;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class ChatWindow extends JFrame {
+public class ChatBox extends JFrame {
 
 	private JTextArea chatHistory;
 	private JTextField chatText;
+	private JButton button;
+	private ChatClient client;
+	private JScrollPane scrollBar;
 
-	public ChatWindow() throws IOException {
+	public ChatBox() {
 		setSize(500, 600);
 		setLocationRelativeTo(null);
 		setTitle("Chat");
@@ -33,7 +39,7 @@ public class ChatWindow extends JFrame {
 				chatHistory.setForeground(Color.BLACK);
 				chatHistory.append("\n" + chat);
 				try {
-					new ChatClient(chat);
+					new ChatClient();
 				} catch (IOException ex) {
 
 					ex.printStackTrace();
@@ -56,14 +62,13 @@ public class ChatWindow extends JFrame {
 		return chatHistory.getText();
 	}
 
-	public void setChatHistoryText(String text) {
+	public void addClientText(String text) {
 		chatHistory.setForeground(Color.RED);
 		chatHistory.append("\n" + text);
 	}
 
-	public static void main(String[] args) throws IOException {
-		ChatWindow window = new ChatWindow();
-		window.setVisible(true);
+	public Socket getClientSocket() {
+		return client.getSocket();
 	}
 
 }

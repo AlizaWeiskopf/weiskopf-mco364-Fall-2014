@@ -14,6 +14,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class ChatBox extends JFrame {
+	
+	//GUI
+	//when you first send a message it instantiates a chat client
 
 	private JTextArea chatHistory;
 	private JTextField chatText;
@@ -54,8 +57,6 @@ public class ChatBox extends JFrame {
 		add(chatHistory, BorderLayout.CENTER);
 		add(chatText, BorderLayout.SOUTH);
 
-		// ChatServer server = new ChatServer(this);
-		// server.start();
 	}
 
 	public String getChatHistoryText() {

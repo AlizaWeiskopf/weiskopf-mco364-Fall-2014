@@ -12,9 +12,7 @@ public class MultiChatServer {
 
 	public static void main(String[] args) throws IOException {
 
-		// ChatBox window = new ChatBox();
-		// window.setVisible(true);
-		ServerSocket serverSocket = new ServerSocket(9097);
+		ServerSocket serverSocket = new ServerSocket(3773);
 		List<Socket> sockets = new ArrayList<Socket>();
 		BlockingQueue<String> messages = new LinkedBlockingQueue<String>();
 		// LinkedBlockingQueue will block at the take method and wait for there

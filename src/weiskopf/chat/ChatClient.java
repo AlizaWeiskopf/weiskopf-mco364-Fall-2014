@@ -10,7 +10,8 @@ public class ChatClient {
 	private Socket socket;
 
 	public ChatClient() throws UnknownHostException, IOException {
-		this.socket = new Socket("192.168.117.107", 3773);
+		//this.socket = new Socket("192.168.117.107", 3773);
+		this.socket = new Socket("127.0.0.1", 3773);
 
 	}
 

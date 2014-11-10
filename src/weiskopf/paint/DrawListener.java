@@ -1,9 +1,10 @@
 package weiskopf.paint;
 
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
-public class DrawListener implements MouseMotionListener {
+public class DrawListener extends MouseAdapter {
 
 	private Canvas canvas;
 
@@ -13,8 +14,10 @@ public class DrawListener implements MouseMotionListener {
 
 	@Override
 	public void mouseDragged(MouseEvent e) {// hold down the button
-		canvas.setPoint(e.getX(), e.getY());
-	}
+			canvas.setPoint(e.getX(), e.getY());
+		}
+
+	
 
 	@Override
 	public void mouseMoved(MouseEvent e) {// no clicking

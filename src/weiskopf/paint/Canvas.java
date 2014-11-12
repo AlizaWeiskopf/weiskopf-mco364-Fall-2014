@@ -28,21 +28,14 @@ public class Canvas extends JComponent {
 		setColor(Color.GREEN);
 
 	}
-	
-	
-
-
 
 	public Color getColor() {
 		return color;
 	}
 
-
 	public void setColor(Color color) {
 		this.color = color;
 	}
-
-
 
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -53,7 +46,6 @@ public class Canvas extends JComponent {
 		}
 
 	}
-	
 
 	public void setPoint(int endX, int endY) {
 		// save previous point
@@ -68,7 +60,7 @@ public class Canvas extends JComponent {
 		Graphics g = image.getGraphics();
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setColor(color);
-		
+
 		if (counter != 0) {
 			if (x == previousX + 1 && y == previousY + 1) {
 				g2.fillOval(x, y, 5, 5);
@@ -82,6 +74,10 @@ public class Canvas extends JComponent {
 
 		counter++;
 		repaint();
+	}
+
+	public void reset() {
+		counter = 0;
 	}
 
 }

@@ -15,10 +15,11 @@ public class Paint extends JFrame {
 		Canvas canvas = new Canvas();
 		add(canvas, BorderLayout.CENTER);
 
-		ColorPanel colors = new ColorPanel(canvas);
+		ChooseColorPanel colors = new ChooseColorPanel(canvas);
 		add(colors, BorderLayout.SOUTH);
 
 		canvas.addMouseMotionListener(new DrawListener(canvas));
+
 	}
 
 	public static void main(String[] args) {

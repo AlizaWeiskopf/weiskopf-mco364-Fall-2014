@@ -13,18 +13,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class ChatBox extends JFrame {
-	
-	//GUI
-	//when you first send a message it instantiates a chat client
+public class ChatWindow extends JFrame {
 
 	private JTextArea chatHistory;
 	private JTextField chatText;
-	private JButton button;
-	private ChatClient client;
-	private JScrollPane scrollBar;
 
-	public ChatBox() {
+	public ChatWindow() throws IOException {
 		setSize(500, 600);
 		setLocationRelativeTo(null);
 		setTitle("Chat");
@@ -42,7 +36,7 @@ public class ChatBox extends JFrame {
 				chatHistory.setForeground(Color.BLACK);
 				chatHistory.append("\n" + chat);
 				try {
-					new ChatClient();
+					new ChatClient(chat);
 				} catch (IOException ex) {
 
 					ex.printStackTrace();
@@ -57,19 +51,22 @@ public class ChatBox extends JFrame {
 		add(chatHistory, BorderLayout.CENTER);
 		add(chatText, BorderLayout.SOUTH);
 
+		ChatServer server = new ChatServer(this);
+		server.start();
 	}
 
 	public String getChatHistoryText() {
 		return chatHistory.getText();
 	}
 
-	public void addClientText(String text) {
+	public void setChatHistoryText(String text) {
 		chatHistory.setForeground(Color.RED);
 		chatHistory.append("\n" + text);
 	}
 
-	public Socket getClientSocket() {
-		return client.getSocket();
+	public static void main(String[] args) throws IOException {
+		ChatWindow window = new ChatWindow();
+		window.setVisible(true);
 	}
 
 }

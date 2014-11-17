@@ -7,23 +7,13 @@ import java.net.UnknownHostException;
 
 public class ChatClient {
 
-	private Socket socket;
-
-	public ChatClient() throws UnknownHostException, IOException {
-		//this.socket = new Socket("192.168.117.107", 3773);
-		this.socket = new Socket("127.0.0.1", 3773);
-
-	}
-
-	public void chatLine(String chatText) throws IOException {
+	public ChatClient(String chatText) throws UnknownHostException, IOException {
+		//Socket socket = new Socket("192.168.117.137", 8080);
+		Socket socket = new Socket("localhost", 8080);
 		OutputStream output = socket.getOutputStream();
 		output.write(chatText.getBytes());
-		output.write("\n".getBytes());
 		output.flush();
-	}
-
-	public Socket getSocket() {
-		return socket;
+		socket.close();
 	}
 
 }

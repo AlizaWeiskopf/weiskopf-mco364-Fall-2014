@@ -6,12 +6,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-public class ServerThread extends Thread {
+public class ReceivingThread extends Thread {
 
 	private Socket socket;
-	private ChatBox window;
+	private ChatWindow window;
 
-	public ServerThread(Socket socket, ChatBox window) {
+	public ReceivingThread(Socket socket, ChatWindow window) {
 		this.socket = socket;
 		this.window = window;
 	}
@@ -23,7 +23,7 @@ public class ServerThread extends Thread {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(input));
 			String line;
 			while ((line = reader.readLine()) != null) {
-				window.addClientText(line);
+				window.setChatHistoryText(line);
 			}
 
 		} catch (IOException e) {

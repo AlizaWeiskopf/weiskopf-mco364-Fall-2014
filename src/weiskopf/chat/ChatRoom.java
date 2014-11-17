@@ -11,7 +11,7 @@ public class ChatRoom {
 	//starts gui which also starts client
 
 	public static void main(String[] args) throws IOException {
-		ChatBox chatBox = new ChatBox();
+		ChatWindow chatBox = new ChatWindow();
 		chatBox.setVisible(true);
 		Socket clientSocket = chatBox.getClientSocket();
 

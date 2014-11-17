@@ -63,7 +63,7 @@ public class ChatWindow extends JFrame {
 		chatHistory.setForeground(Color.RED);
 		chatHistory.append("\n" + text);
 	}
-
+	
 	public static void main(String[] args) throws IOException {
 		ChatWindow window = new ChatWindow();
 		window.setVisible(true);

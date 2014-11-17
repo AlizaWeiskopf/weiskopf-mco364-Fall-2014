@@ -51,8 +51,8 @@ public class ChatWindow extends JFrame {
 		add(chatHistory, BorderLayout.CENTER);
 		add(chatText, BorderLayout.SOUTH);
 
-		ChatServer server = new ChatServer(this);
-		server.start();
+		//ChatServer server = new ChatServer(this);
+		//server.start();
 	}
 
 	public String getChatHistoryText() {

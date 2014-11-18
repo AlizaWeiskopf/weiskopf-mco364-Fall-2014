@@ -1,6 +1,7 @@
 package weiskopf.paint;
 
 import java.awt.BasicStroke;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -17,6 +18,7 @@ public class Canvas extends JComponent {
 	private BufferedImage image;
 	private int counter;
 	private Color color;
+	private int stroke;
 
 	public Canvas() {
 		image = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);// A =
@@ -26,7 +28,8 @@ public class Canvas extends JComponent {
 																			// pixels
 		counter = 0;
 		setColor(Color.GREEN);
-
+		stroke = 5;
+		
 	}
 
 	public Color getColor() {
@@ -36,6 +39,16 @@ public class Canvas extends JComponent {
 	public void setColor(Color color) {
 		this.color = color;
 	}
+	
+	public void incrementStroke(double increment){
+		stroke += increment;
+
+	}
+	
+	public int getStroke(){
+		return stroke;
+	}
+	
 
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -63,13 +76,16 @@ public class Canvas extends JComponent {
 
 		if (counter != 0) {
 			if (x == previousX + 1 && y == previousY + 1) {
-				g2.fillOval(x, y, 5, 5);
+				g2.fillOval(x, y, stroke, stroke);
 			} else {
-				g2.setStroke(new BasicStroke(5));
+				if(stroke < 0){
+					stroke = 0;
+				}
+				g2.setStroke(new BasicStroke(stroke));
 				g2.drawLine(previousX + 1, previousY + 1, x, y);
 			}
 		} else {
-			g2.fillOval(x, y, 5, 5);
+			g2.fillOval(x, y, stroke, stroke);
 		}
 
 		counter++;

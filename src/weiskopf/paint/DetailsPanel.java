@@ -1,25 +1,42 @@
 package weiskopf.paint;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class ChooseColorPanel extends JPanel {
+public class DetailsPanel extends JPanel {
 
 	private JButton chooseColor;
+	private JLabel strokeSize;
 	private Canvas canvas;
 
-	public ChooseColorPanel(Canvas canvas) {
+	public DetailsPanel(Canvas canvas) {
 		this.canvas = canvas;
 		chooseColor = new JButton("Choose Color");
+		chooseColor.setBackground(Color.GREEN);
 		chooseColor.addActionListener(new ChooseColorListener(canvas));
-		add(chooseColor, BorderLayout.SOUTH);
+		this.strokeSize = new JLabel();
+		setStrokeSize(canvas.getStroke());
+		add(chooseColor);
+		add(strokeSize);
 	}
+	
+	
+	public void setStrokeSize(int size){
+		strokeSize.setText("Stroke size: " + size);
+	}
+
+	
+	public JLabel getStrokeSize() {
+		return strokeSize;
+	}
+
+
 
 	private class ChooseColorListener implements ActionListener {
 
@@ -34,6 +51,7 @@ public class ChooseColorPanel extends JPanel {
 			Color color = JColorChooser.showDialog(canvas, "Choose Color", Color.GREEN);
 			if (color != null) {
 				canvas.setColor(color);
+				chooseColor.setBackground(color);
 			}
 		}
 	}

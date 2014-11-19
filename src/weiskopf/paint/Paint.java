@@ -18,9 +18,8 @@ public class Paint extends JFrame {
 		DetailsPanel panel = new DetailsPanel(canvas);
 		add(panel, BorderLayout.SOUTH);
 
-		DrawListener dl = new DrawListener(canvas, panel);
-		canvas.addMouseMotionListener(dl);
-		canvas.addMouseWheelListener(dl);
+		canvas.addMouseMotionListener(new DrawLineListener(canvas, panel));
+		canvas.addMouseWheelListener(new StrokeSizeListener(canvas, panel));
 
 	}
 

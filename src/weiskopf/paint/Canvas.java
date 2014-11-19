@@ -1,7 +1,6 @@
 package weiskopf.paint;
 
 import java.awt.BasicStroke;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -16,6 +15,7 @@ public class Canvas extends JComponent {
 	private int previousX;
 	private int previousY;
 	private BufferedImage image;
+	private DrawListener listener;
 	private int counter;
 	private Color color;
 	private int stroke;
@@ -29,7 +29,7 @@ public class Canvas extends JComponent {
 		counter = 0;
 		setColor(Color.GREEN);
 		stroke = 5;
-		
+
 	}
 
 	public Color getColor() {
@@ -39,22 +39,22 @@ public class Canvas extends JComponent {
 	public void setColor(Color color) {
 		this.color = color;
 	}
-	
-	public void incrementStroke(double increment){
+
+	public void incrementStroke(double increment) {
 		stroke += increment;
 
 	}
-	
-	public int getStroke(){
+
+	public int getStroke() {
 		return stroke;
 	}
-	
 
 	@Override
 	protected void paintComponent(Graphics g) {
 		if (counter != 0) {
 			super.paintComponent(g);
 			g.drawImage(image, 0, 0, null);
+			listener.drawPreview((Graphics2D) g);
 
 		}
 
@@ -75,17 +75,20 @@ public class Canvas extends JComponent {
 		g2.setColor(color);
 
 		if (counter != 0) {
-			if (x == previousX + 1 && y == previousY + 1) {
-				g2.fillOval(x, y, stroke, stroke);
-			} else {
-				if(stroke < 0){
-					stroke = 0;
-				}
-				g2.setStroke(new BasicStroke(stroke));
-				g2.drawLine(previousX + 1, previousY + 1, x, y);
+			/*
+			 * if (x == previousX + 1 && y == previousY + 1) { g2.fillOval(x, y,
+			 * stroke, stroke); } else {
+			 */
+			if (stroke < 0) {
+				stroke = 0;
 			}
-		} else {
-			g2.fillOval(x, y, stroke, stroke);
+			BasicStroke s = new BasicStroke(stroke, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
+			g2.setStroke(s);
+			g2.drawLine(previousX + 1, previousY + 1, x, y);
+			// g2.drawRect(previousX + 1, previousY + 1, x, y);
+			// }
+			// } else {
+			// g2.fillOval(x, y, stroke, stroke);
 		}
 
 		counter++;

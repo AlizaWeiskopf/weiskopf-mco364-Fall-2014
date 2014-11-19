@@ -1,38 +1,19 @@
 package weiskopf.paint;
 
-import java.awt.event.MouseEvent;
+import java.awt.Graphics2D;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
 
-public class DrawListener implements MouseMotionListener, MouseWheelListener {
+public interface DrawListener extends MouseListener, MouseMotionListener {
 
-	private Canvas canvas;
-	private DetailsPanel panel;
+	// any class that implements DrawListener has to include all methods from
+	// MouseListener and MouseMotionListener
 
-	public DrawListener(Canvas canvas, DetailsPanel panel) {
-		this.canvas = canvas;
-		this.panel = panel;
-	}
-
-	@Override
-	public void mouseDragged(MouseEvent e) {// hold down the button
-		canvas.setPoint(e.getX(), e.getY());
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {// no clicking, mouse just moves
-		canvas.reset();
-	}
-
-	@Override
-	public void mouseWheelMoved(MouseWheelEvent e) {
-		canvas.incrementStroke(e.getPreciseWheelRotation());
-		int size = canvas.getStroke();
-		if(canvas.getStroke() < 0){
-			size = 0;
-		}
-		panel.getStrokeSize().setText("Stroke size: " + size);
-	}
+	public void drawPreview(Graphics2D g);
+	/*
+	 * draws preview, and then when release mouse actually gets drawn to
+	 * buffered image in canvas for line - there is no preview for shape there
+	 * is something
+	 */
 
 }

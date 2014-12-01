@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class DrawOptionsPanel extends JPanel{
+public class OptionsPanel extends JPanel{
 	
 	private Canvas canvas;
 	
@@ -18,7 +18,7 @@ public class DrawOptionsPanel extends JPanel{
 	private JButton fillOval;
 	private JButton drawLine;
 	
-	public DrawOptionsPanel(Canvas canvas){
+	public OptionsPanel(Canvas canvas){
 		this.canvas = canvas;
 		
 		brush = new JButton("Brush");

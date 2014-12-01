@@ -15,7 +15,7 @@ public class Canvas extends JComponent implements MouseWheelListener{
 	
 	private BufferedImage image;
 	private DetailsPanel panel;
-	private DrawOptionsPanel drawPanel;
+	private OptionsPanel drawPanel;
 	private Color color;
 	private int stroke;
 
@@ -40,7 +40,7 @@ public class Canvas extends JComponent implements MouseWheelListener{
 		panel = new DetailsPanel(this);
 		paint.add(panel, BorderLayout.SOUTH);
 		
-		drawPanel = new DrawOptionsPanel(this);
+		drawPanel = new OptionsPanel(this);
 		paint.add(drawPanel, BorderLayout.NORTH);
 		
 		addMouseWheelListener(this);

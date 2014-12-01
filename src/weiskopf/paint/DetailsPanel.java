@@ -12,22 +12,24 @@ import javax.swing.JPanel;
 public class DetailsPanel extends JPanel {
 
 	private JButton chooseColor;
-	private JButton line;
-	private JButton rect;
+	private JButton clear;
 	private JLabel strokeSize;
 	private Canvas canvas;
 
 	public DetailsPanel(Canvas canvas) {
 		this.canvas = canvas;
-		line = new JButton("Draw Line");
-		rect = new JButton("Draw Rectangle");
+		
 		chooseColor = new JButton("Choose Color");
 		chooseColor.setBackground(Color.GREEN);
 		chooseColor.addActionListener(new ChooseColorListener(canvas));
-		this.strokeSize = new JLabel();
+		
+		clear = new JButton("Clear");
+		clear.addActionListener(new ClearScreenListener());
+		
+		strokeSize = new JLabel();
 		setStrokeSize(canvas.getStroke());
-		add(line);
-		add(rect);
+		
+		add(clear);
 		add(chooseColor);
 		add(strokeSize);
 	}
@@ -55,6 +57,15 @@ public class DetailsPanel extends JPanel {
 				canvas.setColor(color);
 				chooseColor.setBackground(color);
 			}
+		}
+	}
+	
+
+	private class ClearScreenListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			canvas.clear();
 		}
 	}
 }

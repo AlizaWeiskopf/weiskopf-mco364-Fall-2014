@@ -12,15 +12,9 @@ public class Paint extends JFrame {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		Canvas canvas = new Canvas();
+		Canvas canvas = new Canvas(this);
 		add(canvas, BorderLayout.CENTER);
-
-		DetailsPanel panel = new DetailsPanel(canvas);
-		add(panel, BorderLayout.SOUTH);
-
-		canvas.addMouseMotionListener(new DrawLineListener(canvas, panel));
-		canvas.addMouseWheelListener(new StrokeSizeListener(canvas, panel));
-
+		
 	}
 
 	public static void main(String[] args) {

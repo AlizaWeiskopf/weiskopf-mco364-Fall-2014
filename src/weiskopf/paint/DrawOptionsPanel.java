@@ -65,6 +65,21 @@ public class DrawOptionsPanel extends JPanel{
 				FillRectangle fillRect = new FillRectangle(canvas);
 				canvas.addDrawListener(fillRect);
 				break;
+				
+			case "Draw Oval":
+				DrawOval drawOval = new DrawOval(canvas);
+				canvas.addDrawListener(drawOval);
+				break;
+				
+			case "Fill Oval":
+				FillOval fillOval = new FillOval(canvas);
+				canvas.addDrawListener(fillOval);
+				break;
+				
+			case "Draw Line":
+				DrawLine drawLine = new DrawLine(canvas);
+				canvas.addDrawListener(drawLine);
+				break;
 			}
 			
 		}

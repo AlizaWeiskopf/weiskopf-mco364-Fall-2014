@@ -14,17 +14,14 @@ import javax.swing.JComponent;
 public class Canvas extends JComponent implements MouseWheelListener{
 	
 	private BufferedImage image;
-	private DetailsPanel panel;
-	private OptionsPanel drawPanel;
+	private DrawListener listener;
+	private DetailsPanel detailsPanel;
+	private OptionsPanel optionsPanel;
+	
 	private Color color;
 	private int stroke;
-
-	/*private int x;
-	private int y;
-	private int previousX;
-	private int previousY;*/
-	private DrawListener listener;
 	private int counter;
+	private boolean clear;
 	
 
 	public Canvas(Paint paint) {
@@ -33,20 +30,37 @@ public class Canvas extends JComponent implements MouseWheelListener{
 																			// =
 																			// transparent
 																			// pixels
-		counter = 0;
+		
+
 		setColor(Color.GREEN);
 		stroke = 5;
+		counter = 0;
+		clear = false;		
 		
-		panel = new DetailsPanel(this);
-		paint.add(panel, BorderLayout.SOUTH);
-		
-		drawPanel = new OptionsPanel(this);
-		paint.add(drawPanel, BorderLayout.NORTH);
-		
+		addDrawListener(new DrawBrush(this));
 		addMouseWheelListener(this);
-
+		
+		optionsPanel = new OptionsPanel(this);
+		paint.add(optionsPanel, BorderLayout.NORTH);
+		
+		detailsPanel = new DetailsPanel(this);
+		paint.add(detailsPanel, BorderLayout.SOUTH);
 
 	}
+	
+
+	@Override
+	protected void paintComponent(Graphics g) {
+
+		if (counter != 0) {
+			super.paintComponent(g);
+			g.drawImage(image, 0, 0, null);
+			listener.drawPreview((Graphics2D) g);
+			
+		}
+
+	}
+
 
 	public Color getColor() {
 		return color;
@@ -61,7 +75,7 @@ public class Canvas extends JComponent implements MouseWheelListener{
 
 	}
 
-	public int getStroke() {
+	public int getStrokeSize() {
 		return stroke;
 	}
 	
@@ -77,22 +91,20 @@ public class Canvas extends JComponent implements MouseWheelListener{
 		counter++;
 	}
 	
+	public boolean getClear(){
+		return clear;
+	}
+	
+	public void resetClear(){
+		clear = false;
+	}
+	
 	public void clear(){
+		clear = true;
 		image = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
 		repaint();
 	}
-
-	@Override
-	protected void paintComponent(Graphics g) {
-		if (counter != 0) {
-			super.paintComponent(g);
-			g.drawImage(image, 0, 0, null);
-			//listener.drawPreview((Graphics2D) g);
-
-		}
-
-	}
-
+	
 	public void reset() {
 		counter = 0;
 	}
@@ -100,11 +112,11 @@ public class Canvas extends JComponent implements MouseWheelListener{
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		incrementStroke(e.getPreciseWheelRotation());
-		int size = getStroke();
+		int size = getStrokeSize();
 		if(size < 0){
 			size = 0;
 		}
-		panel.getStrokeSize().setText("Stroke size: " + size);
+		detailsPanel.getStrokeSize().setText("Stroke size: " + size);
 		
 	}
 
@@ -118,17 +130,15 @@ public class Canvas extends JComponent implements MouseWheelListener{
 		
 	}
 	
-	public Graphics2D getAndSetGraphics(){
-		Graphics g = image.getGraphics();
-		Graphics2D g2 = (Graphics2D) g;
-		int stroke = getStroke();
+	public void setGraphicsDetails(Graphics2D g){
+
+		int stroke = getStrokeSize();
 		if (stroke < 0) {
 			stroke = 0;
 		}
 		BasicStroke s = new BasicStroke(stroke, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
-		g2.setStroke(s);
-		g2.setColor(getColor());
-		return g2;
+		g.setStroke(s);
+		g.setColor(getColor());
 	}
 
 }

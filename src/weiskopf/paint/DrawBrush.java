@@ -1,13 +1,12 @@
 package weiskopf.paint;
 
-import java.awt.BasicStroke;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 
 public class DrawBrush implements DrawListener {
 
 	private Canvas canvas;
+	
 	private int previousX;
 	private int previousY;
 	private int x;
@@ -49,7 +48,14 @@ public class DrawBrush implements DrawListener {
 
 	@Override
 	public void mouseDragged(MouseEvent e) { // hold down button
-		setPoint(e.getX(), e.getY());
+		// save previous point
+		previousX = x;
+		previousY = y;
+		
+		x = e.getX();
+		y = e.getY();
+
+		draw();
 
 	}
 
@@ -59,30 +65,28 @@ public class DrawBrush implements DrawListener {
 
 	}
 
-	@Override
-	public void drawPreview() {
-		// TODO Auto-generated method stub
 
+	@Override
+	public void drawPreview(Graphics2D g) {
+		// no preview for brush
+		
 	}
 
-	public void setPoint(int endX, int endY) {
-		// save previous point
-		previousX = x;
-		previousY = y;
-
-		this.x = endX;
-		this.y = endY;
+	@Override
+	public void draw() {
 
 		// draw to the image and then when call repaint redraws image on the
 		// JComponent
 
 		if (canvas.getCounter() != 0) {
-			Graphics2D g2 = canvas.getAndSetGraphics();
-			g2.drawLine(previousX + 1, previousY + 1, x, y);
+			Graphics2D g = (Graphics2D)canvas.getImage().getGraphics();
+			canvas.setGraphicsDetails(g);
+			g.drawLine(previousX + 1, previousY + 1, x, y);
 		}
 
 		canvas.incrementCounter();
 		canvas.repaint();
+		
 	}
 
 }

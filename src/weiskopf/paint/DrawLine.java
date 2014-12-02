@@ -3,42 +3,42 @@ package weiskopf.paint;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 
-public class DrawLine implements DrawListener{
-	
+public class DrawLine implements DrawListener {
+
 	private Canvas canvas;
-	
+
 	private int startX;
 	private int startY;
 	private int endX;
 	private int endY;
-	
-	public DrawLine(Canvas canvas){
+
+	public DrawLine(Canvas canvas) {
 		this.canvas = canvas;
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		startX = e.getX();
 		startY = e.getY();
-		
+
 	}
 
 	@Override
@@ -46,36 +46,43 @@ public class DrawLine implements DrawListener{
 		endX = e.getX();
 		endY = e.getY();
 		draw();
-		
+
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		endX = e.getX();
+		endY = e.getY();
+		canvas.incrementCounter();
+		canvas.repaint();
+	
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void drawPreview() {
-		// TODO Auto-generated method stub
-		
+	public void drawPreview(Graphics2D g) {
+		if (!canvas.getClear()) {
+
+			canvas.setGraphicsDetails(g);
+			g.drawLine(startX, startY, endX, endY);
+
+		} else {
+
+			canvas.resetClear();
+
+		}
+
 	}
-	
-	public void drawPreveiw(){
-	
-	}
-	
-	public void draw(){
-		Graphics2D g2 = canvas.getAndSetGraphics();
-		g2.drawLine(startX, startY, endX, endY);
-		
-		canvas.incrementCounter();
+
+	public void draw() {
+		Graphics2D g = (Graphics2D) canvas.getImage().getGraphics();
+		canvas.setGraphicsDetails(g);
+		g.drawLine(startX, startY, endX, endY);
 		canvas.repaint();
 	}
 

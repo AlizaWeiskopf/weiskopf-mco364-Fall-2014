@@ -27,7 +27,7 @@ public class DetailsPanel extends JPanel {
 		clear.addActionListener(new ClearScreenListener());
 		
 		strokeSize = new JLabel();
-		setStrokeSize(canvas.getStroke());
+		setStrokeSize(canvas.getStrokeSize());
 		
 		add(clear);
 		add(chooseColor);

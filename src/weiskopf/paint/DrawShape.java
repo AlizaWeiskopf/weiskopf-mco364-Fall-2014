@@ -69,25 +69,34 @@ public class DrawShape implements DrawListener {
 
 	@Override
 	public void drawPreview(Graphics2D g) {// draws preview to canvas
+
+		int minX = Math.min(startX, endX);
+		int minY = Math.min(startY, endY);
+		int maxX = Math.max(startX, endX);
+		int maxY = Math.max(startY, endY);
+
+		int width = maxX - minX;
+		int height = maxY - minY;
+
 		if (!canvas.getClear()) {
 
 			canvas.setGraphicsDetails(g);
 
 			switch (shape) {
 			case "Draw Rectangle":
-				g.drawRect(startX, startY, endX - startX, endY - startY);
+				g.drawRect(minX, minY, width, height);
 				break;
 
 			case "Fill Rectangle":
-				g.fillRect(startX, startY, endX - startX, endY - startY);
+				g.fillRect(minX, minY, width, height);
 				break;
 
 			case "Draw Oval":
-				g.drawOval(startX, startY, endX - startX, endY - startY);
+				g.drawOval(minX, minY, width, height);
 				break;
 
 			case "Fill Oval":
-				g.fillOval(startX, startY, endX - startX, endY - startY);
+				g.fillOval(minX, minY, width, height);
 				break;
 			}
 		} else {
@@ -100,24 +109,34 @@ public class DrawShape implements DrawListener {
 
 	@Override
 	public void draw() {// draws to image
+
+		int minX = Math.min(startX, endX);
+		int minY = Math.min(startY, endY);
+		int maxX = Math.max(startX, endX);
+		int maxY = Math.max(startY, endY);
+
+		int width = maxX - minX;
+		int height = maxY - minY;
+
 		Graphics2D g = (Graphics2D) canvas.getImage().getGraphics();
 		canvas.setGraphicsDetails(g);
 
 		switch (shape) {
+
 		case "Draw Rectangle":
-			g.drawRect(startX, startY, endX - startX, endY - startY);
+			g.drawRect(minX, minY, width, height);
 			break;
 
 		case "Fill Rectangle":
-			g.fillRect(startX, startY, endX - startX, endY - startY);
+			g.fillRect(minX, minY, width, height);
 			break;
 
 		case "Draw Oval":
-			g.drawOval(startX, startY, endX - startX, endY - startY);
+			g.drawOval(minX, minY, width, height);
 			break;
 
 		case "Fill Oval":
-			g.fillOval(startX, startY, endX - startX, endY - startY);
+			g.fillOval(minX, minY, width, height);
 			break;
 		}
 

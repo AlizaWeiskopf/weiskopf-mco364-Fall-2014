@@ -2,6 +2,7 @@ package weiskopf.paint.message;
 
 import java.awt.Graphics2D;
 
+
 public class LineMessage implements PaintMessage {
 
 	private int x1;
@@ -76,7 +77,6 @@ public class LineMessage implements PaintMessage {
 
 	@Override
 	public void apply(Graphics2D g) {
-		// TODO Auto-generated method stub
 
 	}
 

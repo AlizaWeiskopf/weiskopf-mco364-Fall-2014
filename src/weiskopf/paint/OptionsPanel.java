@@ -11,6 +11,7 @@ public class OptionsPanel extends JPanel {
 	private Canvas canvas;
 
 	private JButton brush;
+	private JButton bucketFill;
 	private JButton drawRect;
 	private JButton fillRect;
 	private JButton drawOval;
@@ -21,6 +22,7 @@ public class OptionsPanel extends JPanel {
 		this.canvas = canvas;
 
 		brush = new JButton("Brush");
+		bucketFill = new JButton("Bucket Fill");
 		drawRect = new JButton("Draw Rectangle");
 		fillRect = new JButton("Fill Rectangle");
 		drawOval = new JButton("Draw Oval");
@@ -29,6 +31,7 @@ public class OptionsPanel extends JPanel {
 
 		SelectDrawListener drawType = new SelectDrawListener();
 		brush.addActionListener(drawType);
+		bucketFill.addActionListener(drawType);
 		drawRect.addActionListener(drawType);
 		fillRect.addActionListener(drawType);
 		drawOval.addActionListener(drawType);
@@ -36,6 +39,7 @@ public class OptionsPanel extends JPanel {
 		drawLine.addActionListener(drawType);
 
 		add(brush);
+		add(bucketFill);
 		add(drawRect);
 		add(fillRect);
 		add(drawOval);
@@ -52,6 +56,11 @@ public class OptionsPanel extends JPanel {
 			case "Brush":
 				DrawBrush brush = new DrawBrush(canvas);
 				canvas.addDrawListener(brush);
+				break;
+				
+			case "Bucket Fill":
+				DrawBucketFill bucketFill = new DrawBucketFill(canvas);
+				canvas.addDrawListener(bucketFill);
 				break;
 
 			case "Draw Rectangle":

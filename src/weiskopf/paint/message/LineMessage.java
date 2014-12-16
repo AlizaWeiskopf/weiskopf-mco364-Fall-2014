@@ -1,7 +1,8 @@
 package weiskopf.paint.message;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics2D;
-
 
 public class LineMessage implements PaintMessage {
 
@@ -77,6 +78,10 @@ public class LineMessage implements PaintMessage {
 
 	@Override
 	public void apply(Graphics2D g) {
+
+		g.setColor(new Color(color));
+		g.setStroke(new BasicStroke(strokeSize, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+		g.drawLine(x1, y1, x2, y2);
 
 	}
 

@@ -1,5 +1,7 @@
 package weiskopf.paint.message;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class ShapeMessage implements PaintMessage {
@@ -96,7 +98,37 @@ public class ShapeMessage implements PaintMessage {
 
 	@Override
 	public void apply(Graphics2D g) {
-		// TODO Auto-generated method stub
+
+		g.setColor(new Color(color));
+		g.setStroke(new BasicStroke(strokeSize, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+
+		int minX = Math.min(x, width);
+		int minY = Math.min(y, height);
+		int maxX = Math.max(x, width);
+		int maxY = Math.max(y, height);
+
+		int width = maxX - minX;
+		int height = maxY - minY;
+
+		switch (String.valueOf(type)) {
+
+		case "RECT":
+			if (fill) {
+				g.fillRect(minX, minY, width, height);
+			} else {
+				g.drawRect(minX, minY, width, height);
+			}
+			break;
+
+		case "OVAL":
+			if (fill) {
+				g.fillOval(minX, minY, width, height);
+			} else {
+				g.drawOval(minX, minY, width, height);
+			}
+			break;
+
+		}
 
 	}
 

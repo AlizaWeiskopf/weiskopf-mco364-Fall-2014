@@ -17,13 +17,14 @@ public class Canvas extends JComponent implements MouseWheelListener {
 	private DrawListener listener;
 	private DetailsPanel detailsPanel;
 	private OptionsPanel optionsPanel;
+	private Client client;
 
 	private Color color;
 	private int stroke;
 	private int counter;
 	private boolean clear;
 
-	public Canvas(Paint paint) {
+	public Canvas(Paint paint, Client client) {
 		// use buffered image b/c when you call repaint the canvas will clear -
 		// so need to draw to image and then draw that to canvas
 		image = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);// A =
@@ -31,7 +32,7 @@ public class Canvas extends JComponent implements MouseWheelListener {
 																			// =
 																			// transparent
 																			// pixels
-
+		this.client = client;
 		setColor(Color.GREEN);
 		stroke = 5;
 		counter = 0;
@@ -95,6 +96,10 @@ public class Canvas extends JComponent implements MouseWheelListener {
 
 	public void resetClear() {
 		clear = false;
+	}
+
+	public Client getClient() {
+		return client;
 	}
 
 	public void clear() {

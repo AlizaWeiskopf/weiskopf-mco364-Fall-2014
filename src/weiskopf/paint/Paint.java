@@ -1,23 +1,29 @@
 package weiskopf.paint;
 
 import java.awt.BorderLayout;
+import java.io.IOException;
+import java.net.UnknownHostException;
 
 import javax.swing.JFrame;
 
 public class Paint extends JFrame {
 
-	public Paint() {
+	public Paint() throws UnknownHostException, IOException {
 		setTitle("Paint");
 		setSize(800, 600);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		Canvas canvas = new Canvas(this);
+		Client client = new Client();
+
+		Canvas canvas = new Canvas(this, client);
 		add(canvas, BorderLayout.CENTER);
-		
+
+		// CLOSE SOCKET
+
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UnknownHostException, IOException {
 		Paint p = new Paint();
 		p.setVisible(true);
 

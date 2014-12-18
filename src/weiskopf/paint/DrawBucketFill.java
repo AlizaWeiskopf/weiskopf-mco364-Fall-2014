@@ -1,12 +1,10 @@
 package weiskopf.paint;
 
-import java.awt.AWTException;
-import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Robot;
 import java.awt.event.MouseEvent;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class DrawBucketFill implements DrawListener {
 
@@ -71,66 +69,32 @@ public class DrawBucketFill implements DrawListener {
 	@Override
 	public void draw() {
 		Graphics2D g = (Graphics2D) canvas.getImage().getGraphics();
-		canvas.setGraphicsDetails(g);
-
-		Robot r;
-		Color firstClickColor;
-		try {
-			r = new Robot();
-			firstClickColor = r.getPixelColor(x, y);
-			fill(x, y, g, firstClickColor);// draw the point
-			canvas.incrementCounter();
-			canvas.repaint();
-		} catch (AWTException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		// get the color of the pixel you clicked
-		// int pixelClickedColor = canvas.getImage().getRGB(x, y);
+		int clickedColor = canvas.getImage().getRGB(x, y);
 
-		// fill(x, y, g, pixelClickedColor);// draw the point
+		Queue<Point> points = new LinkedList<Point>();
+		points.add(new Point(x, y));
 
-		// paint all surrounding pixels that
-		// are same color as where you clicked with color of pen
-		// stop when you reach a pixel that is not same color
-
-		// code to calculate surrounding points
-		/*
-		 * x++; y++;
-		 * 
-		 * int nextPixelColor = canvas.getImage().getRGB(x, y); while
-		 * (nextPixelColor == pixelClickedColor) { g.drawLine(x, y, x, y); x++;
-		 * y++; nextPixelColor = canvas.getImage().getRGB(x, y); }
-		 */
-
-		// check color of point = if color == pixelClickedColor
-		// draw it also
-
-	}
-
-	public void fill(int x, int y, Graphics g, Color firstClickColor) {
-		if (canvas.contains(new Point(x, y))) {
-
-			Robot r;
-			try {
-				r = new Robot();
-				Color pixelColor = r.getPixelColor(x, y);
-				// int pixelColor = canvas.getImage().getRGB(x,y);
-
-				if (pixelColor.equals(firstClickColor)) {
-					g.drawLine(x, y, x, y);// draw the point
-					fill(x, y + 1, g, firstClickColor);
-					fill(x, y - 1, g, firstClickColor);
-					fill(x + 1, y, g, firstClickColor);
-					fill(x - 1, y, g, firstClickColor);
+		while (!points.isEmpty()) {
+			Point p = points.remove();
+			int x = (int) p.getX();
+			int y = (int) p.getY();
+			if (canvas.contains(p)) {// point is on the screen
+				if (canvas.getImage().getRGB(x, y) == clickedColor) {// color
+																		// matches
+					canvas.getImage().setRGB(x, y, canvas.getColor().getRGB());
+					points.add(new Point(x + 1, y));
+					points.add(new Point(x - 1, y));
+					points.add(new Point(x, y + 1));
+					points.add(new Point(x, y - 1));
 				}
-			} catch (AWTException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-
 		}
+
+		canvas.incrementCounter();
+		canvas.repaint();
+
 	}
 
 }

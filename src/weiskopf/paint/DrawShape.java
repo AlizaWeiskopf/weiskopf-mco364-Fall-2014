@@ -118,7 +118,7 @@ public class DrawShape implements DrawListener {
 		int width = maxX - minX;
 		int height = maxY - minY;
 
-		Graphics2D g = (Graphics2D) canvas.getImage().getGraphics();
+		Graphics2D g = (Graphics2D) canvas.getLayers()[canvas.getLayerSelected()].getGraphics();
 		canvas.setGraphicsDetails(g);
 
 		switch (shape) {

@@ -11,24 +11,43 @@ import javax.swing.JPanel;
 
 public class DetailsPanel extends JPanel {
 
+	private JButton layers[] = new JButton[4];
+
 	private JButton chooseColor;
 	private JButton clear;
+
+	private JLabel chooseLayer;
 	private JLabel strokeSize;
+
 	private Canvas canvas;
 
 	public DetailsPanel(Canvas canvas) {
 		this.canvas = canvas;
-		
+
+		ChooseLayerListener layerListener = new ChooseLayerListener(canvas);
+		for (int i = 0; i < 4; i++) {
+			layers[i] = new JButton(String.valueOf(i + 1));
+			layers[i].addActionListener(layerListener);
+		}
+		layers[0].setBackground(Color.GRAY);
+
 		chooseColor = new JButton("Choose Color");
 		chooseColor.setBackground(Color.GREEN);
 		chooseColor.addActionListener(new ChooseColorListener(canvas));
-		
+
 		clear = new JButton("Clear");
 		clear.addActionListener(new ClearScreenListener());
-		
+
+		chooseLayer = new JLabel("Choose Layer:");
+
 		strokeSize = new JLabel();
 		setStrokeSize(canvas.getStrokeSize());
-		
+
+		add(chooseLayer);
+		for (int i = 0; i < 4; i++) {
+			add(layers[i]);
+		}
+		add(new JLabel("                               "));
 		add(clear);
 		add(chooseColor);
 		add(strokeSize);
@@ -59,7 +78,6 @@ public class DetailsPanel extends JPanel {
 			}
 		}
 	}
-	
 
 	private class ClearScreenListener implements ActionListener {
 
@@ -67,5 +85,29 @@ public class DetailsPanel extends JPanel {
 		public void actionPerformed(ActionEvent arg0) {
 			canvas.clear();
 		}
+	}
+
+	private class ChooseLayerListener implements ActionListener {
+
+		private Canvas canvas;
+
+		public ChooseLayerListener(Canvas canvas) {
+			this.canvas = canvas;
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			for (int i = 0; i < 4; i++) {
+				if (Color.GRAY.equals(layers[i].getBackground())) {
+					layers[i].setBackground(null);
+				}
+			}
+			JButton buttonClicked = (JButton) e.getSource();
+			buttonClicked.setBackground(Color.GRAY);
+			int layer = Integer.valueOf(buttonClicked.getText());
+			canvas.setLayerSelected(layer - 1);
+
+		}
+
 	}
 }

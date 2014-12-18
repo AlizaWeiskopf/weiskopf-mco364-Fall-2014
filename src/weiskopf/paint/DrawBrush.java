@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 public class DrawBrush implements DrawListener {
 
 	private Canvas canvas;
-	
+
 	private int previousX;
 	private int previousY;
 	private int x;
@@ -51,7 +51,7 @@ public class DrawBrush implements DrawListener {
 		// save previous point
 		previousX = x;
 		previousY = y;
-		
+
 		x = e.getX();
 		y = e.getY();
 
@@ -65,11 +65,10 @@ public class DrawBrush implements DrawListener {
 
 	}
 
-
 	@Override
 	public void drawPreview(Graphics2D g) {
 		// no preview for brush
-		
+
 	}
 
 	@Override
@@ -79,14 +78,14 @@ public class DrawBrush implements DrawListener {
 		// JComponent
 
 		if (canvas.getCounter() != 0) {
-			Graphics2D g = (Graphics2D)canvas.getImage().getGraphics();
+			Graphics2D g = (Graphics2D) canvas.getLayers()[canvas.getLayerSelected()].getGraphics();
 			canvas.setGraphicsDetails(g);
 			g.drawLine(previousX + 1, previousY + 1, x, y);
 		}
 
 		canvas.incrementCounter();
 		canvas.repaint();
-		
+
 	}
 
 }

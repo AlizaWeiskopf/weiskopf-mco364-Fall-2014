@@ -13,7 +13,10 @@ import javax.swing.JComponent;
 
 public class Canvas extends JComponent implements MouseWheelListener {
 
-	private BufferedImage image;
+	private BufferedImage[] layers;
+
+	private int layerSelected;
+
 	private DrawListener listener;
 	private DetailsPanel detailsPanel;
 	private OptionsPanel optionsPanel;
@@ -24,15 +27,19 @@ public class Canvas extends JComponent implements MouseWheelListener {
 	private boolean clear;
 
 	public Canvas(Paint paint) {
+
+		// setBackground(new Color(Color.TRANSLUCENT));
+
 		// use buffered image b/c when you call repaint the canvas will clear -
 		// so need to draw to image and then draw that to canvas
-		image = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);// A =
-																			// alpha
-																			// =
-																			// transparent
-																			// pixels
+		// A = alpha = transparent pixels
+		layers = new BufferedImage[4];
+		for (int i = 0; i < 4; i++) {
+			layers[i] = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
+		}
 
 		setColor(Color.GREEN);
+		layerSelected = 0;
 		stroke = 5;
 		counter = 0;
 		clear = false;
@@ -53,7 +60,9 @@ public class Canvas extends JComponent implements MouseWheelListener {
 
 		if (counter != 0) {
 			super.paintComponent(g);
-			g.drawImage(image, 0, 0, null);
+			for (int i = 0; i < 4; i++) {
+				g.drawImage(layers[i], 0, 0, null);
+			}
 			listener.drawPreview((Graphics2D) g);
 
 		}
@@ -77,8 +86,8 @@ public class Canvas extends JComponent implements MouseWheelListener {
 		return stroke;
 	}
 
-	public BufferedImage getImage() {
-		return image;
+	public BufferedImage[] getLayers() {
+		return layers;
 	}
 
 	public int getCounter() {
@@ -87,6 +96,14 @@ public class Canvas extends JComponent implements MouseWheelListener {
 
 	public void incrementCounter() {
 		counter++;
+	}
+
+	public int getLayerSelected() {
+		return layerSelected;
+	}
+
+	public void setLayerSelected(int layerSelected) {
+		this.layerSelected = layerSelected;
 	}
 
 	public boolean getClear() {
@@ -99,7 +116,7 @@ public class Canvas extends JComponent implements MouseWheelListener {
 
 	public void clear() {
 		clear = true;
-		image = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
+		layers[layerSelected] = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
 		repaint();
 	}
 

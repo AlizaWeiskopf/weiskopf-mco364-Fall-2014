@@ -3,6 +3,7 @@ package weiskopf.paint;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -68,10 +69,11 @@ public class DrawBucketFill implements DrawListener {
 
 	@Override
 	public void draw() {
-		Graphics2D g = (Graphics2D) canvas.getImage().getGraphics();
+		BufferedImage layer = canvas.getLayers()[canvas.getLayerSelected()];
+		// Graphics2D g = (Graphics2D) layer.getGraphics();
 
 		// get the color of the pixel you clicked
-		int clickedColor = canvas.getImage().getRGB(x, y);
+		int clickedColor = layer.getRGB(x, y);
 
 		Queue<Point> points = new LinkedList<Point>();
 		points.add(new Point(x, y));
@@ -81,9 +83,9 @@ public class DrawBucketFill implements DrawListener {
 			int x = (int) p.getX();
 			int y = (int) p.getY();
 			if (canvas.contains(p)) {// point is on the screen
-				if (canvas.getImage().getRGB(x, y) == clickedColor) {// color
-																		// matches
-					canvas.getImage().setRGB(x, y, canvas.getColor().getRGB());
+				if (layer.getRGB(x, y) == clickedColor) {// color
+															// matches
+					layer.setRGB(x, y, canvas.getColor().getRGB());
 					points.add(new Point(x + 1, y));
 					points.add(new Point(x - 1, y));
 					points.add(new Point(x, y + 1));

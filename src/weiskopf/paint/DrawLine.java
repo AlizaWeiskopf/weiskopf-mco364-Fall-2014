@@ -55,7 +55,7 @@ public class DrawLine implements DrawListener {
 		endY = e.getY();
 		canvas.incrementCounter();
 		canvas.repaint();
-	
+
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class DrawLine implements DrawListener {
 	}
 
 	public void draw() {
-		Graphics2D g = (Graphics2D) canvas.getImage().getGraphics();
+		Graphics2D g = (Graphics2D) canvas.getLayers()[canvas.getLayerSelected()].getGraphics();
 		canvas.setGraphicsDetails(g);
 		g.drawLine(startX, startY, endX, endY);
 		canvas.repaint();

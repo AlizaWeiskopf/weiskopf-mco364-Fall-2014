@@ -117,6 +117,7 @@ public class Canvas extends JComponent implements MouseWheelListener {
 	public void clear() {
 		clear = true;
 		layers[layerSelected] = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
+		counter++;
 		repaint();
 	}
 

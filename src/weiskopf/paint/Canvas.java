@@ -62,8 +62,10 @@ public class Canvas extends JComponent implements MouseWheelListener {
 			super.paintComponent(g);
 			for (int i = 0; i < 4; i++) {
 				g.drawImage(layers[i], 0, 0, null);
+				if (i == layerSelected) {
+					listener.drawPreview((Graphics2D) g);
+				}
 			}
-			listener.drawPreview((Graphics2D) g);
 
 		}
 

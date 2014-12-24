@@ -8,6 +8,8 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.UnknownHostException;
 
 import javax.swing.JComponent;
 
@@ -24,7 +26,7 @@ public class Canvas extends JComponent implements MouseWheelListener {
 	private int counter;
 	private boolean clear;
 
-	public Canvas(Paint paint, Client client) {
+	public Canvas(Paint paint) throws UnknownHostException, IOException {
 		// use buffered image b/c when you call repaint the canvas will clear -
 		// so need to draw to image and then draw that to canvas
 		image = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);// A =
@@ -32,7 +34,7 @@ public class Canvas extends JComponent implements MouseWheelListener {
 																			// =
 																			// transparent
 																			// pixels
-		this.client = client;
+		client = new Client(this);
 		setColor(Color.GREEN);
 		stroke = 5;
 		counter = 0;

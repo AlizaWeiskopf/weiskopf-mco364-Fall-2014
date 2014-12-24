@@ -14,9 +14,7 @@ public class Paint extends JFrame {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		Client client = new Client();
-
-		Canvas canvas = new Canvas(this, client);
+		Canvas canvas = new Canvas(this);
 		add(canvas, BorderLayout.CENTER);
 
 		// CLOSE SOCKET

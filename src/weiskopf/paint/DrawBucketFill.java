@@ -1,17 +1,13 @@
 package weiskopf.paint;
 
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.event.MouseEvent;
-import java.util.Stack;
+
+import weiskopf.paint.message.BucketFillMessage;
 
 public class DrawBucketFill implements DrawListener {
 
 	private Canvas canvas;
-	private Stack<Point> pixelStack;
-
-	private Graphics2D g;
-	private int pixelClickedColor;
 
 	private int x;
 	private int y;
@@ -71,46 +67,12 @@ public class DrawBucketFill implements DrawListener {
 
 	@Override
 	public void draw() {
-		g = (Graphics2D) canvas.getImage().getGraphics();
-		canvas.setGraphicsDetails(g);
 
-		// get the color of the pixel you clicked
-		pixelClickedColor = canvas.getImage().getRGB(x, y);
-
-		// paint all surrounding pixels that
-		// are same color as where you clicked with color of pen
-		// stop when you reach a pixel that is not same color
-
-		pixelStack = new Stack();
-		pixelStack.push(new Point(x, y));
-
-		fill(x, y);// draw the point
+		canvas.getModule().sendMessage(new BucketFillMessage(canvas, x, y, canvas.getColor().getRGB()));
 
 		canvas.incrementCounter();
 		canvas.repaint();
 
-	}
-
-	public void fill(int x, int y) {
-		// check color of point = if color == pixelClickedColor
-		// draw it also
-
-		if (canvas.contains(new Point(x, y))) {
-			int nextPixelColor = canvas.getImage().getRGB(x, y);
-
-			if (nextPixelColor == pixelClickedColor) {
-				g.drawLine(x, y, x, y);// draw the point
-				fill(x, y + 1);
-				fill(x, y - 1);
-				fill(x + 1, y);
-				fill(x - 1, y);
-			}
-			/*
-			 * } catch (AWTException e) { // TODO Auto-generated catch block
-			 * e.printStackTrace(); }
-			 */
-
-		}
 	}
 
 }

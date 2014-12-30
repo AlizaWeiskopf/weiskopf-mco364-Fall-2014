@@ -1,6 +1,14 @@
 package weiskopf.paint.message;
 
+import weiskopf.paint.Canvas;
+
 public class PaintMessageFactory {
+
+	private Canvas canvas;
+
+	public PaintMessageFactory(Canvas canvas) {
+		this.canvas = canvas;
+	}
 
 	public PaintMessage getMessage(String message) {
 
@@ -40,7 +48,7 @@ public class PaintMessageFactory {
 			int x3 = Integer.valueOf(messageElements[1]);
 			int y3 = Integer.valueOf(messageElements[2]);
 			int color3 = Integer.valueOf(messageElements[3]);
-			paintMessage = new BucketFillMessage(x3, y3, color3);
+			paintMessage = new BucketFillMessage(canvas, x3, y3, color3);
 			break;
 		}
 

@@ -25,16 +25,17 @@ public class ListeningThread extends Thread {
 		try {
 			InputStream input = socket.getInputStream();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-			StringBuilder message = new StringBuilder();
 			String line;
 			while ((line = reader.readLine()) != null) {
-				message.append(line);
+				System.out.println(line);
+				PaintMessageFactory factory = new PaintMessageFactory(canvas);
+				PaintMessage paintMessage = factory.getMessage(line);
+				if (paintMessage != null) {
+					paintMessage.apply((Graphics2D) canvas.getImage().getGraphics());
+				}
+
 			}
-			PaintMessageFactory factory = new PaintMessageFactory();
-			PaintMessage paintMessage = factory.getMessage(message.toString());
-			if (paintMessage != null) {
-				paintMessage.apply((Graphics2D) canvas.getImage().getGraphics());
-			}
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

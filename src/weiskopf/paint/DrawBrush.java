@@ -2,7 +2,6 @@ package weiskopf.paint;
 
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 
 import weiskopf.paint.message.LineMessage;
 
@@ -58,12 +57,7 @@ public class DrawBrush implements DrawListener {
 		x = e.getX();
 		y = e.getY();
 
-		try {
-			draw();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		draw();
 
 	}
 
@@ -75,25 +69,19 @@ public class DrawBrush implements DrawListener {
 
 	@Override
 	public void drawPreview(Graphics2D g) {
-		// no preview for brush
+		// no previews in networking (or for brush)
 
 	}
 
 	@Override
-	public void draw() throws IOException {
-
-		// draw to the image and then when call repaint redraws image on the
-		// JComponent
+	public void draw() {
 
 		if (canvas.getCounter() != 0) {
 
-			LineMessage m = new LineMessage(previousX, previousY, x, y, canvas.getStrokeSize(), canvas.getColor()
-					.getRGB());
-			canvas.getClient().sendMessage(m.toString());
+			LineMessage m = new LineMessage(previousX, previousY, x, y, canvas.getColor().getRGB(),
+					canvas.getStrokeSize());
+			canvas.getModule().sendMessage(m);
 
-			// Graphics2D g = (Graphics2D)canvas.getImage().getGraphics();
-			// canvas.setGraphicsDetails(g);
-			// g.drawLine(previousX + 1, previousY + 1, x, y);
 		}
 
 		canvas.incrementCounter();

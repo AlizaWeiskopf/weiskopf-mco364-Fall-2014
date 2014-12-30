@@ -3,6 +3,8 @@ package weiskopf.paint;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 
+import weiskopf.paint.message.LineMessage;
+
 public class DrawLine implements DrawListener {
 
 	private Canvas canvas;
@@ -55,7 +57,7 @@ public class DrawLine implements DrawListener {
 		endY = e.getY();
 		canvas.incrementCounter();
 		canvas.repaint();
-	
+
 	}
 
 	@Override
@@ -66,6 +68,7 @@ public class DrawLine implements DrawListener {
 
 	@Override
 	public void drawPreview(Graphics2D g) {
+
 		if (!canvas.getClear()) {
 
 			canvas.setGraphicsDetails(g);
@@ -73,16 +76,17 @@ public class DrawLine implements DrawListener {
 
 		} else {
 
-			canvas.resetClear();
+			canvas.setClear(false);
 
 		}
 
 	}
 
 	public void draw() {
-		Graphics2D g = (Graphics2D) canvas.getImage().getGraphics();
-		canvas.setGraphicsDetails(g);
-		g.drawLine(startX, startY, endX, endY);
+		canvas.getModule().sendMessage(
+				new LineMessage(startX, startY, endX, endY, canvas.getColor().getRGB(), canvas.getStrokeSize()));
+
+		canvas.incrementCounter();
 		canvas.repaint();
 	}
 

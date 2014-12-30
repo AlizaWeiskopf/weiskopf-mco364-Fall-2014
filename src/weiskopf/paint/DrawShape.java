@@ -3,6 +3,10 @@ package weiskopf.paint;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 
+import weiskopf.paint.message.PaintMessage;
+import weiskopf.paint.message.ShapeMessage;
+import weiskopf.paint.message.Type;
+
 public class DrawShape implements DrawListener {
 
 	private Canvas canvas;
@@ -101,7 +105,7 @@ public class DrawShape implements DrawListener {
 			}
 		} else {
 
-			canvas.resetClear();
+			canvas.setClear(false);
 
 		}
 
@@ -110,36 +114,34 @@ public class DrawShape implements DrawListener {
 	@Override
 	public void draw() {// draws to image
 
-		int minX = Math.min(startX, endX);
-		int minY = Math.min(startY, endY);
-		int maxX = Math.max(startX, endX);
-		int maxY = Math.max(startY, endY);
-
-		int width = maxX - minX;
-		int height = maxY - minY;
-
-		Graphics2D g = (Graphics2D) canvas.getImage().getGraphics();
-		canvas.setGraphicsDetails(g);
+		PaintMessage message = null;
 
 		switch (shape) {
 
 		case "Draw Rectangle":
-			g.drawRect(minX, minY, width, height);
+			message = new ShapeMessage(Type.valueOf("RECT"), startX, startY, endX, endY, canvas.getColor().getRGB(),
+					canvas.getStrokeSize(), false);
 			break;
 
 		case "Fill Rectangle":
-			g.fillRect(minX, minY, width, height);
+			message = new ShapeMessage(Type.valueOf("RECT"), startX, startY, endX, endY, canvas.getColor().getRGB(),
+					canvas.getStrokeSize(), true);
 			break;
 
 		case "Draw Oval":
-			g.drawOval(minX, minY, width, height);
+			message = new ShapeMessage(Type.valueOf("OVAL"), startX, startY, endX, endY, canvas.getColor().getRGB(),
+					canvas.getStrokeSize(), false);
 			break;
 
 		case "Fill Oval":
-			g.fillOval(minX, minY, width, height);
+			message = new ShapeMessage(Type.valueOf("OVAL"), startX, startY, endX, endY, canvas.getColor().getRGB(),
+					canvas.getStrokeSize(), true);
 			break;
 		}
 
+		canvas.getModule().sendMessage(message);
+
+		canvas.incrementCounter();
 		canvas.repaint();
 
 	}

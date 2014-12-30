@@ -8,7 +8,6 @@ import java.net.UnknownHostException;
 public class Client {
 
 	private Socket socket;
-	private Canvas canvas;
 
 	public Client(Canvas canvas) throws UnknownHostException, IOException {
 		socket = new Socket("192.168.1.2", 3773);

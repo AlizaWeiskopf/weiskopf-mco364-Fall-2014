@@ -8,25 +8,40 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.UnknownHostException;
+import java.net.ConnectException;
 
 import javax.swing.JComponent;
 
+import weiskopf.paint.message.LoopbackNetworkModule;
+import weiskopf.paint.message.NetworkModule;
+import weiskopf.paint.message.OnlineNetworkModule;
+
 public class Canvas extends JComponent implements MouseWheelListener {
+
+	private Client client;
+	private NetworkModule module;
 
 	private BufferedImage image;
 	private DrawListener listener;
 	private DetailsPanel detailsPanel;
 	private OptionsPanel optionsPanel;
-	private Client client;
 
 	private Color color;
 	private int stroke;
 	private int counter;
 	private boolean clear;
 
-	public Canvas(Paint paint) throws UnknownHostException, IOException {
+	public Canvas(Paint paint) {
+
+		try {
+			client = new Client(this);
+			module = new OnlineNetworkModule(client);
+		} catch (Exception ex) {
+			if (ex instanceof ConnectException) {
+				module = new LoopbackNetworkModule(this);
+			}
+		}
+
 		// use buffered image b/c when you call repaint the canvas will clear -
 		// so need to draw to image and then draw that to canvas
 		image = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);// A =
@@ -34,7 +49,7 @@ public class Canvas extends JComponent implements MouseWheelListener {
 																			// =
 																			// transparent
 																			// pixels
-		client = new Client(this);
+
 		setColor(Color.GREEN);
 		stroke = 5;
 		counter = 0;
@@ -96,19 +111,24 @@ public class Canvas extends JComponent implements MouseWheelListener {
 		return clear;
 	}
 
-	public void resetClear() {
-		clear = false;
+	public void setClear(boolean wasClicked) {
+		clear = wasClicked;
 	}
 
 	public Client getClient() {
 		return client;
 	}
 
-	public void clear() {
-		clear = true;
-		image = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
-		repaint();
+	public NetworkModule getModule() {
+		return module;
 	}
+
+	/*
+	 * public void clear() { clear = true; image = new BufferedImage(800, 600,
+	 * BufferedImage.TYPE_INT_ARGB); repaint();
+	 * 
+	 * }
+	 */
 
 	public void reset() {
 		counter = 0;

@@ -9,6 +9,8 @@ import javax.swing.JColorChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import weiskopf.paint.message.ClearMessage;
+
 public class DetailsPanel extends JPanel {
 
 	private JButton chooseColor;
@@ -18,17 +20,17 @@ public class DetailsPanel extends JPanel {
 
 	public DetailsPanel(Canvas canvas) {
 		this.canvas = canvas;
-		
+
 		chooseColor = new JButton("Choose Color");
 		chooseColor.setBackground(Color.GREEN);
 		chooseColor.addActionListener(new ChooseColorListener(canvas));
-		
+
 		clear = new JButton("Clear");
 		clear.addActionListener(new ClearScreenListener());
-		
+
 		strokeSize = new JLabel();
 		setStrokeSize(canvas.getStrokeSize());
-		
+
 		add(clear);
 		add(chooseColor);
 		add(strokeSize);
@@ -59,13 +61,15 @@ public class DetailsPanel extends JPanel {
 			}
 		}
 	}
-	
 
 	private class ClearScreenListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			canvas.clear();
+			canvas.setClear(true);
+			canvas.getModule().sendMessage(new ClearMessage());
+			canvas.incrementCounter();
+			canvas.repaint();
 		}
 	}
 }

@@ -27,11 +27,12 @@ public class ListeningThread extends Thread {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(input));
 			String line;
 			while ((line = reader.readLine()) != null) {
-				System.out.println(line);
 				PaintMessageFactory factory = new PaintMessageFactory(canvas);
 				PaintMessage paintMessage = factory.getMessage(line);
 				if (paintMessage != null) {
 					paintMessage.apply((Graphics2D) canvas.getImage().getGraphics());
+					canvas.incrementCounter();
+					canvas.repaint();
 				}
 
 			}

@@ -123,13 +123,6 @@ public class Canvas extends JComponent implements MouseWheelListener {
 		return module;
 	}
 
-	/*
-	 * public void clear() { clear = true; image = new BufferedImage(800, 600,
-	 * BufferedImage.TYPE_INT_ARGB); repaint();
-	 * 
-	 * }
-	 */
-
 	public void reset() {
 		counter = 0;
 	}

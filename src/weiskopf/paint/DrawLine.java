@@ -86,8 +86,6 @@ public class DrawLine implements DrawListener {
 		canvas.getModule().sendMessage(
 				new LineMessage(startX, startY, endX, endY, canvas.getColor().getRGB(), canvas.getStrokeSize()));
 
-		canvas.incrementCounter();
-		canvas.repaint();
 	}
 
 }

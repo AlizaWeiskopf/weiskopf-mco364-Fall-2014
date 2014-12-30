@@ -68,8 +68,6 @@ public class DetailsPanel extends JPanel {
 		public void actionPerformed(ActionEvent arg0) {
 			canvas.setClear(true);
 			canvas.getModule().sendMessage(new ClearMessage());
-			canvas.incrementCounter();
-			canvas.repaint();
 		}
 	}
 }

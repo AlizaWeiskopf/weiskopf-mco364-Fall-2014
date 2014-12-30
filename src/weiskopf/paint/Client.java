@@ -16,6 +16,10 @@ public class Client {
 		thread.start();
 	}
 
+	public Socket getSocket() {
+		return socket;
+	}
+
 	public void sendMessage(String message) throws IOException {
 		OutputStream output = socket.getOutputStream();
 		output.write(message.toString().getBytes());

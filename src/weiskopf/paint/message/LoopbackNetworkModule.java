@@ -15,6 +15,8 @@ public class LoopbackNetworkModule implements NetworkModule {
 	@Override
 	public void sendMessage(PaintMessage message) {
 		message.apply((Graphics2D) canvas.getImage().getGraphics());
+		canvas.incrementCounter();
+		canvas.repaint();
 
 	}
 

@@ -141,9 +141,6 @@ public class DrawShape implements DrawListener {
 
 		canvas.getModule().sendMessage(message);
 
-		canvas.incrementCounter();
-		canvas.repaint();
-
 	}
 
 }

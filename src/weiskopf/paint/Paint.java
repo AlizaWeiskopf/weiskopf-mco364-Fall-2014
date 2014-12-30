@@ -17,7 +17,15 @@ public class Paint extends JFrame {
 		Canvas canvas = new Canvas(this);
 		add(canvas, BorderLayout.CENTER);
 
-		// CLOSE SOCKET
+		/*
+		 * addWindowListener(new WindowAdapter() {
+		 * 
+		 * @Override public void windowClosing(WindowEvent e) { try {
+		 * canvas.getClient().getSocket().close(); } catch (IOException e1) { //
+		 * TODO Auto-generated catch block e1.printStackTrace(); } }
+		 * 
+		 * });
+		 */
 
 	}
 

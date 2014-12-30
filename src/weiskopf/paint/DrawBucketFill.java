@@ -70,9 +70,6 @@ public class DrawBucketFill implements DrawListener {
 
 		canvas.getModule().sendMessage(new BucketFillMessage(canvas, x, y, canvas.getColor().getRGB()));
 
-		canvas.incrementCounter();
-		canvas.repaint();
-
 	}
 
 }

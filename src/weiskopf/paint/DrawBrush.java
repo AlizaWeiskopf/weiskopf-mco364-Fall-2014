@@ -85,7 +85,6 @@ public class DrawBrush implements DrawListener {
 		}
 
 		canvas.incrementCounter();
-		canvas.repaint();
 
 	}
 

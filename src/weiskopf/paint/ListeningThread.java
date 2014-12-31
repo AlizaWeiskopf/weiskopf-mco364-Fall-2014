@@ -21,6 +21,8 @@ public class ListeningThread extends Thread {
 
 	@Override
 	public void run() {
+		// thread dies if exception is thrown - so won't receive any
+		// messages if this happens
 		try {
 			PaintMessageFactory factory = new PaintMessageFactory(canvas);
 			InputStream input = socket.getInputStream();
@@ -36,15 +38,19 @@ public class ListeningThread extends Thread {
 						canvas.repaint();
 					}
 				} catch (Exception e) {
+
+					// if catch exception thread won't die
+
+					// do continue to go back to while loop, otherwise may not
+					// die
+					// but won't go back to top - now want to just avoid this
+					// message and continue
 					continue;
 				}
 
 			}
-			// thread dies if exception is thrown - so won't receive any
-			// messages if this happens
-		} catch (Exception e) {
 
-			// if catch exception thread won't die
+		} catch (Exception e) {
 
 			e.printStackTrace();
 		}

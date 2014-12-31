@@ -2,7 +2,6 @@ package weiskopf.paint;
 
 import java.awt.Graphics2D;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
@@ -23,22 +22,30 @@ public class ListeningThread extends Thread {
 	@Override
 	public void run() {
 		try {
+			PaintMessageFactory factory = new PaintMessageFactory(canvas);
 			InputStream input = socket.getInputStream();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(input));
 			String line;
 			while ((line = reader.readLine()) != null) {
-				PaintMessageFactory factory = new PaintMessageFactory(canvas);
-				PaintMessage paintMessage = factory.getMessage(line);
-				if (paintMessage != null) {
-					paintMessage.apply((Graphics2D) canvas.getImage().getGraphics());
-					canvas.incrementCounter();
-					canvas.repaint();
+
+				try {
+					PaintMessage paintMessage = factory.getMessage(line);
+					if (paintMessage != null) {
+						paintMessage.apply((Graphics2D) canvas.getImage().getGraphics());
+						canvas.incrementCounter();
+						canvas.repaint();
+					}
+				} catch (Exception e) {
+					continue;
 				}
 
 			}
+			// thread dies if exception is thrown - so won't receive any
+			// messages if this happens
+		} catch (Exception e) {
 
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			// if catch exception thread won't die
+
 			e.printStackTrace();
 		}
 

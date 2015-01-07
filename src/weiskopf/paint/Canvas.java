@@ -132,9 +132,9 @@ public class Canvas extends JComponent implements MouseWheelListener {
 		incrementStroke(e.getPreciseWheelRotation());
 		int size = getStrokeSize();
 		if (size < 0) {
-			size = 0;
+			stroke = 0;
 		}
-		detailsPanel.getStrokeSize().setText("Stroke size: " + size);
+		detailsPanel.getStrokeSize().setText("Stroke size: " + stroke);
 
 	}
 

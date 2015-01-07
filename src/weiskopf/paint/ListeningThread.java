@@ -38,7 +38,7 @@ public class ListeningThread extends Thread {
 						canvas.repaint();
 					}
 				} catch (Exception e) {
-
+					e.printStackTrace();
 					// if catch exception thread won't die
 
 					// do continue to go back to while loop, otherwise may not

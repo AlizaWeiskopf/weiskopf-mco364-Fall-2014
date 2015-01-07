@@ -16,6 +16,8 @@ public class DrawShape implements DrawListener {
 	private int startY;
 	private int endX;
 	private int endY;
+	private int width;
+	private int height;
 
 	public DrawShape(Canvas canvas, String shape) {
 		this.canvas = canvas;
@@ -52,6 +54,10 @@ public class DrawShape implements DrawListener {
 												// to image
 		endX = e.getX();
 		endY = e.getY();
+
+		width = Math.abs(endX - startX);
+		height = Math.abs(endY - startY);
+
 		draw();
 
 	}
@@ -60,6 +66,10 @@ public class DrawShape implements DrawListener {
 	public void mouseDragged(MouseEvent e) {// as you drag,draw a preview
 		endX = e.getX();
 		endY = e.getY();
+
+		width = Math.abs(endX - startX);
+		height = Math.abs(endY - startY);
+
 		canvas.incrementCounter();
 		canvas.repaint();
 
@@ -76,11 +86,6 @@ public class DrawShape implements DrawListener {
 
 		int minX = Math.min(startX, endX);
 		int minY = Math.min(startY, endY);
-		int maxX = Math.max(startX, endX);
-		int maxY = Math.max(startY, endY);
-
-		int width = maxX - minX;
-		int height = maxY - minY;
 
 		if (!canvas.getClear()) {
 
@@ -116,25 +121,28 @@ public class DrawShape implements DrawListener {
 
 		PaintMessage message = null;
 
+		int minX = Math.min(startX, endX);
+		int minY = Math.min(startY, endY);
+
 		switch (shape) {
 
 		case "Draw Rectangle":
-			message = new ShapeMessage(Type.valueOf("RECT"), startX, startY, endX, endY, canvas.getColor().getRGB(),
+			message = new ShapeMessage(Type.valueOf("RECT"), minX, minY, width, height, canvas.getColor().getRGB(),
 					canvas.getStrokeSize(), false);
 			break;
 
 		case "Fill Rectangle":
-			message = new ShapeMessage(Type.valueOf("RECT"), startX, startY, endX, endY, canvas.getColor().getRGB(),
+			message = new ShapeMessage(Type.valueOf("RECT"), minX, minY, width, height, canvas.getColor().getRGB(),
 					canvas.getStrokeSize(), true);
 			break;
 
 		case "Draw Oval":
-			message = new ShapeMessage(Type.valueOf("OVAL"), startX, startY, endX, endY, canvas.getColor().getRGB(),
+			message = new ShapeMessage(Type.valueOf("OVAL"), minX, minY, width, height, canvas.getColor().getRGB(),
 					canvas.getStrokeSize(), false);
 			break;
 
 		case "Fill Oval":
-			message = new ShapeMessage(Type.valueOf("OVAL"), startX, startY, endX, endY, canvas.getColor().getRGB(),
+			message = new ShapeMessage(Type.valueOf("OVAL"), minX, minY, width, height, canvas.getColor().getRGB(),
 					canvas.getStrokeSize(), true);
 			break;
 		}

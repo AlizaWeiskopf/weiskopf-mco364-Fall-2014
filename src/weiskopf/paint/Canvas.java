@@ -150,10 +150,6 @@ public class Canvas extends JComponent implements MouseWheelListener {
 
 	public void setGraphicsDetails(Graphics2D g) {
 
-		int stroke = getStrokeSize();
-		if (stroke < 0) {
-			stroke = 0;
-		}
 		BasicStroke s = new BasicStroke(stroke, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
 		g.setStroke(s);
 		g.setColor(getColor());

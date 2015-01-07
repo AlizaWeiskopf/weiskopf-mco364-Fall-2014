@@ -68,7 +68,12 @@ public class BucketFillMessage implements PaintMessage {
 			Point p = points.remove();
 			int x = (int) p.getX();
 			int y = (int) p.getY();
-			if (canvas.contains(p)) {// point is on the screen
+			// canvas.contains(p)
+			if (x >= 0 && x <= canvas.getWidth() && y >= 0 && y <= canvas.getHeight()) {// point
+																						// is
+																						// on
+																						// the
+																						// screen
 				if (image.getRGB(x, y) == clickedColor) {// color matches
 					image.setRGB(x, y, color);
 					points.add(new Point(x + 1, y));

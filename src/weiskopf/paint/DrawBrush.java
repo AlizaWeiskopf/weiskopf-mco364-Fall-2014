@@ -69,7 +69,7 @@ public class DrawBrush implements DrawListener {
 
 	@Override
 	public void drawPreview(Graphics2D g) {
-		// no previews in networking (or for brush)
+		// no preview for brush
 
 	}
 

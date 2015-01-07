@@ -102,13 +102,6 @@ public class ShapeMessage implements PaintMessage {
 		g.setColor(new Color(color));
 		g.setStroke(new BasicStroke(strokeSize, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 
-		/*
-		 * int minX = Math.min(x, width); int minY = Math.min(y, height); int
-		 * maxX = Math.max(x, width); int maxY = Math.max(y, height);
-		 * 
-		 * int width = maxX - minX; int height = maxY - minY;
-		 */
-
 		switch (String.valueOf(type)) {
 
 		case "RECT":

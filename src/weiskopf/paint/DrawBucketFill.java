@@ -61,7 +61,7 @@ public class DrawBucketFill implements DrawListener {
 
 	@Override
 	public void drawPreview(Graphics2D g) {
-		// TODO Auto-generated method stub
+		// no preview for bucket fill
 
 	}
 

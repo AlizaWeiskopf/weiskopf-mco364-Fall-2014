@@ -10,8 +10,8 @@ public class Client {
 	private Socket socket;
 
 	public Client(Canvas canvas) throws UnknownHostException, IOException {
-		socket = new Socket("192.168.117.107", 3773);
-		// socket = new Socket("192.168.1.2", 3773);
+		// socket = new Socket("192.168.117.107", 3773);
+		socket = new Socket("192.168.1.2", 3773);
 
 		ListeningThread thread = new ListeningThread(socket, canvas);
 		thread.start();

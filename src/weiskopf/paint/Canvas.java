@@ -8,7 +8,9 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.net.ConnectException;
+import java.net.UnknownHostException;
 
 import javax.swing.JComponent;
 
@@ -36,10 +38,12 @@ public class Canvas extends JComponent implements MouseWheelListener {
 		try {
 			client = new Client(this);
 			module = new OnlineNetworkModule(client);
-		} catch (Exception ex) {
-			if (ex instanceof ConnectException) {
-				module = new LoopbackNetworkModule(this);
-			}
+		} catch (ConnectException e) {
+			module = new LoopbackNetworkModule(this);
+		} catch (UnknownHostException e) {
+			module = new LoopbackNetworkModule(this);
+		} catch (IOException e) {
+			module = new LoopbackNetworkModule(this);
 		}
 
 		// use buffered image b/c when you call repaint the canvas will clear -
@@ -69,12 +73,9 @@ public class Canvas extends JComponent implements MouseWheelListener {
 	@Override
 	protected void paintComponent(Graphics g) {
 
-		if (counter != 0) {
-			super.paintComponent(g);
-			g.drawImage(image, 0, 0, null);
-			listener.drawPreview((Graphics2D) g);
-
-		}
+		super.paintComponent(g);
+		g.drawImage(image, 0, 0, null);
+		listener.drawPreview((Graphics2D) g);
 
 	}
 

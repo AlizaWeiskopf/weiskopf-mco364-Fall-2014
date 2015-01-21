@@ -59,7 +59,10 @@ public class BucketFillMessage implements PaintMessage {
 		BufferedImage image = canvas.getImage();
 
 		// get the color of the pixel you clicked
-		int clickedColor = image.getRGB(x, y);
+		int clickedColor = 0;
+		if ((x < canvas.getImage().getWidth() && y < canvas.getImage().getHeight())) {
+			clickedColor = image.getRGB(x, y);
+		}
 
 		Queue<Point> points = new LinkedList<Point>();
 		points.add(new Point(x, y));
@@ -72,7 +75,7 @@ public class BucketFillMessage implements PaintMessage {
 			// checking that point is on canvas
 			// checking that color of point matches color of point clicked
 			// and that it's also not the same color as the color to be painted
-			if (x >= 0 && x <= canvas.getWidth() && y >= 0 && y <= canvas.getHeight()
+			if (x >= 0 && x < canvas.getImage().getWidth() && y >= 0 && y < canvas.getImage().getHeight()
 					&& image.getRGB(x, y) == clickedColor && image.getRGB(x, y) != color) {
 
 				image.setRGB(x, y, color);
